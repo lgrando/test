@@ -13,7 +13,7 @@ import retrofit2.Response
  * Created by lucas on 05/09/18.
  */
 class ConsumerService {
-    private val customAPI = ServiceUtil.buildRetrofit(BuildConfig.ENDPOINT).create<CustomAPI>(CustomAPI::class.java)
+    private val eventAPI = ServiceUtil.buildRetrofit(BuildConfig.ENDPOINT).create<EventAPI>(EventAPI::class.java)
 
     private fun sendRequest(observable: Observable<JsonObject>, callback: ServiceCallback) {
         observable
@@ -45,9 +45,4 @@ class ConsumerService {
                 }
     }
 
-    fun startLogin(identifier: String, callback: ServiceCallback) {
-        var json = JsonObject()
-        json.addProperty("identifier", identifier)
-        sendRequest(customAPI.startLogin(json), callback)
-    }
 }

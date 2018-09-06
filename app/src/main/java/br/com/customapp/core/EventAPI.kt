@@ -8,7 +8,7 @@ import retrofit2.http.POST
 /**
  * Created by lucas on 05/09/18.
  */
-interface CustomAPI {
-    @POST("startLogin")
-    fun startLogin(@Body() request: JsonObject): Observable<JsonObject>
+interface EventAPI {
+    @POST("listEvents")
+    fun listEvents(@Body() request: JsonObject): Observable<JsonObject>
 }
