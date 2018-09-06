@@ -30,7 +30,7 @@ class ConsumerService {
         observable
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ response: Response<Void>? ->
+                .subscribe { response: Response<Void>? ->
                     if (response != null) {
                         if (response.isSuccessful) {
                             callback.onSuccess(JsonObject())
@@ -42,7 +42,7 @@ class ConsumerService {
                     } else {
                         callback.onFailure(Throwable("Erro ao se comunicar com o servidor"))
                     }
-                })
+                }
     }
 
     fun startLogin(identifier: String, callback: ServiceCallback) {
