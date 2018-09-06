@@ -15,7 +15,7 @@ import retrofit2.Response
 class ConsumerService {
     private val eventAPI = ServiceUtil.buildRetrofit(BuildConfig.ENDPOINT).create<EventAPI>(EventAPI::class.java)
 
-    private fun sendRequest(observable: Observable<JsonObject>, callback: ServiceCallback) {
+    fun sendRequest(observable: Observable<JsonObject>, callback: ServiceCallback) {
         observable
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -26,7 +26,7 @@ class ConsumerService {
                 })
     }
 
-    private fun sendRequestWithoutResponse(observable: Observable<Response<Void>>, callback: ServiceCallback) {
+    fun sendRequestWithoutResponse(observable: Observable<Response<Void>>, callback: ServiceCallback) {
         observable
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -43,6 +43,10 @@ class ConsumerService {
                         callback.onFailure(Throwable("Erro ao se comunicar com o servidor"))
                     }
                 }
+    }
+
+    fun getEvents(callback: ServiceCallback) {
+        sendRequest(eventAPI.listEvents(), callback)
     }
 
 }
