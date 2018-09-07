@@ -20,14 +20,6 @@ class EventListFragment : Fragment() {
 
     private lateinit var viewModel: EventViewModel
     private lateinit var eventAdapter: EventAdapter
-//    var eventAdapter = EventAdapter(ArrayList(), this.activity!!) {
-//
-//        val event = viewModel.eventList.value?.get(it)
-//
-//        event?.let { event ->
-//            Toast.makeText(activity, "Cliquei no evento [" + event.id + "]", Toast.LENGTH_SHORT).show()
-//        }
-//    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {

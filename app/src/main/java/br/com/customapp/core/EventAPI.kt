@@ -10,6 +10,9 @@ import retrofit2.http.POST
  * Created by lucas on 05/09/18.
  */
 interface EventAPI {
-    @GET("listEvents")
+    @GET("events")
     fun listEvents(): Observable<JsonObject>
+
+    @POST("checkin")
+    fun checkin(@Body() request: JsonObject): Observable<JsonObject>
 }

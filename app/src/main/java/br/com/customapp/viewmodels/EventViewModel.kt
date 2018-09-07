@@ -5,7 +5,7 @@ import android.arch.lifecycle.ViewModel
 import android.databinding.ObservableField
 import br.com.customapp.core.ConsumerService
 import br.com.customapp.core.ServiceCallback
-import br.com.customapp.models.EventItem
+import br.com.customapp.models.Event
 import com.google.gson.JsonObject
 
 /**
@@ -15,13 +15,13 @@ class EventViewModel : ViewModel() {
 
     private val service = ConsumerService()
     var phoneNumber = ObservableField<String>("")
-    var eventList: MutableLiveData<MutableList<EventItem>> = MutableLiveData()
+    var eventList: MutableLiveData<MutableList<Event>> = MutableLiveData()
 
     init {
-        eventList.value = mutableListOf<EventItem>(
-                EventItem(1, "Evento A", "Este é o evento A"),
-                EventItem(2, "Evento B", "Este é o evento B"),
-                EventItem(3, "Evento C", null)
+        eventList.value = mutableListOf<Event>(
+                Event(1, "Evento A", "Este é o evento A"),
+                Event(2, "Evento B", "Este é o evento B"),
+                Event(3, "Evento C", null)
         )
     }
 
