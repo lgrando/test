@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import br.com.customapp.R
 import br.com.customapp.databinding.FragmentEventDetailBinding
+import br.com.customapp.utils.GeocoderUtil
 import br.com.customapp.viewmodels.EventViewModel
 
 class EventDetailFragment : Fragment() {
@@ -33,6 +34,14 @@ class EventDetailFragment : Fragment() {
         binding.handler = this
 
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val location: Location = Location("")
+        location.latitude = -30.0392981
+        location.longitude = -51.2146267
+        GeocoderUtil.getLocationDetails(location, this.activity!!)
     }
 
 }

@@ -2,6 +2,7 @@ package br.com.customapp.core
 
 import br.com.customapp.BuildConfig
 import br.com.customapp.utils.ServiceUtil
+import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import io.reactivex.Observable
@@ -15,7 +16,7 @@ import retrofit2.Response
 class ConsumerService {
     private val eventAPI = ServiceUtil.buildRetrofit(BuildConfig.ENDPOINT).create<EventAPI>(EventAPI::class.java)
 
-    fun sendRequest(observable: Observable<JsonObject>, callback: ServiceCallback) {
+    fun sendRequest(observable: Observable<JsonArray>, callback: ServiceCallback) {
         observable
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -26,24 +27,24 @@ class ConsumerService {
                 })
     }
 
-    fun sendRequestWithoutResponse(observable: Observable<Response<Void>>, callback: ServiceCallback) {
-        observable
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe { response: Response<Void>? ->
-                    if (response != null) {
-                        if (response.isSuccessful) {
-                            callback.onSuccess(JsonObject())
-                        } else {
-                            val jsonParser = JsonParser()
-                            val json = jsonParser.parse(response.errorBody()?.string()).asJsonObject
-                            callback.onFailure(Throwable(ServiceUtil.getErrorMessageFromJson(json)))
-                        }
-                    } else {
-                        callback.onFailure(Throwable("Erro ao se comunicar com o servidor"))
-                    }
-                }
-    }
+//    fun sendRequestWithoutResponse(observable: Observable<Response<Void>>, callback: ServiceCallback) {
+//        observable
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe { response: Response<Void>? ->
+//                    if (response != null) {
+//                        if (response.isSuccessful) {
+//                            callback.onSuccess(JsonObject())
+//                        } else {
+//                            val jsonParser = JsonParser()
+//                            val json = jsonParser.parse(response.errorBody()?.string()).asJsonObject
+//                            callback.onFailure(Throwable(ServiceUtil.getErrorMessageFromJson(json)))
+//                        }
+//                    } else {
+//                        callback.onFailure(Throwable("Erro ao se comunicar com o servidor"))
+//                    }
+//                }
+//    }
 
     fun getEvents(callback: ServiceCallback) {
         sendRequest(eventAPI.listEvents(), callback)

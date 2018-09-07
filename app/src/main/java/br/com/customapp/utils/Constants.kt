@@ -5,4 +5,5 @@ package br.com.customapp.utils
  */
 object Constants {
     val TAG_EVENT_LIST_FRAGMENT = "TAG_EVENT_LIST_FRAGMENT"
+    val TAG_EVENT_DETAIL_FRAGMENT = "TAG_EVENT_DETAIL_FRAGMENT"
 }

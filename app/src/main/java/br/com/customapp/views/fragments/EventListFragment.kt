@@ -12,7 +12,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import br.com.customapp.R
 import br.com.customapp.databinding.FragmentEventListBinding
+import br.com.customapp.utils.Constants
 import br.com.customapp.viewmodels.EventViewModel
+import br.com.customapp.views.activities.MainActivity
 import br.com.customapp.views.adapters.EventAdapter
 import kotlinx.android.synthetic.main.fragment_event_list.*
 
@@ -45,6 +47,7 @@ class EventListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
         setupLiveDataObserver()
+        viewModel.getEvents()
     }
 
     private fun setupRecyclerView() {
@@ -53,6 +56,10 @@ class EventListFragment : Fragment() {
             val event = viewModel.eventList.value?.get(it)
             event?.let { ev ->
                 Toast.makeText(activity, "Cliquei no evento [" + ev.id + "]", Toast.LENGTH_SHORT).show()
+                val activity = activity
+                if (activity is MainActivity) {
+                    activity.replaceFragment(EventDetailFragment(), Constants.TAG_EVENT_DETAIL_FRAGMENT)
+                }
             }
         }
         recyclerView.adapter = eventAdapter

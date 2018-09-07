@@ -4,6 +4,7 @@ import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v4.app.Fragment
 import br.com.customapp.R
 import br.com.customapp.databinding.ActivityMainBinding
 import br.com.customapp.utils.Constants
@@ -24,5 +25,9 @@ class MainActivity : AppCompatActivity() {
         viewModel = ViewModelProviders.of(this).get(EventViewModel::class.java)
 
         fragmentManager.replaceFragment(EventListFragment(), Constants.TAG_EVENT_LIST_FRAGMENT)
+    }
+
+    fun replaceFragment(fragment: Fragment, tag: String) {
+        fragmentManager.replaceFragment(fragment, tag)
     }
 }
