@@ -6,6 +6,6 @@
 
     <!--SOLID-->
     <color name="black">#000000</color>
-    <color name="lightGray">#CCCCCC</color>
+    <color name="lightGray">#EEEEEE</color>
     <color name="white">#FFFFFF</color>
 </resources>

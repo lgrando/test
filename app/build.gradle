@@ -69,8 +69,11 @@ dependencies {
     /*PICASSO*/
     implementation 'com.squareup.picasso:picasso:2.71828'
 
-    /*CIRCLE_IMAGE_VIEW*/
+    /*CIRCLE IMAGEVIEW*/
     implementation 'de.hdodenhof:circleimageview:2.2.0'
+
+    /*AUTOFIT TEXTVIEW*/
+    implementation 'me.grantland:autofittextview:0.2.+'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
