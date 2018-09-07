@@ -31,7 +31,7 @@ class EventAdapter(private var eventItens: List<Event>,
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val event = eventItens[position]
 
-        Picasso.get().load(event.image).into(holder.image)
+        Picasso.get().load(event.image).resize(600,400).centerCrop().into(holder.image)
         holder.title.text = event.title
         holder.view.setOnClickListener {
             listener(position)

@@ -9,7 +9,6 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import br.com.customapp.R
 import br.com.customapp.databinding.FragmentEventListBinding
 import br.com.customapp.utils.Constants
@@ -51,18 +50,18 @@ class EventListFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        recyclerView.layoutManager = LinearLayoutManager(activity)
+        eventList.layoutManager = LinearLayoutManager(activity)
         eventAdapter = EventAdapter(ArrayList(), this.activity!!) {
             val event = viewModel.eventList.value?.get(it)
             event?.let { ev ->
-                Toast.makeText(activity, "Cliquei no evento [" + ev.id + "]", Toast.LENGTH_SHORT).show()
+                viewModel.setEvent(ev)
                 val activity = activity
                 if (activity is MainActivity) {
                     activity.replaceFragment(EventDetailFragment(), Constants.TAG_EVENT_DETAIL_FRAGMENT)
                 }
             }
         }
-        recyclerView.adapter = eventAdapter
+        eventList.adapter = eventAdapter
     }
 
     private fun setupLiveDataObserver() {

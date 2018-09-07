@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import br.com.customapp.R
+import br.com.customapp.models.Event
 import br.com.customapp.models.People
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
@@ -27,7 +28,12 @@ class PeopleAdapter(private var peopleItens: List<People>,
         val people = peopleItens[position]
 
         holder.name.text = people.name
-        Picasso.get().load(people.picture).into(holder.picture)
+        Picasso.get().load(people.picture).resize(600,400).centerCrop().into(holder.picture)
+    }
+
+    fun updateList(statementItens: List<People>) {
+        this.peopleItens = statementItens
+        notifyDataSetChanged()
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
