@@ -18,12 +18,16 @@ class EventRepository {
         service.getEventDetail(id, callback)
     }
 
-    fun doCheckin(eventId: String?, name: String, email: String, callback: ServiceCallback) {
+    fun checkinRequest(eventId: String?, name: String, email: String, callback: ServiceCallback) {
         val json = JsonObject()
         json.addProperty("eventId", eventId)
-        json.addProperty("name", name)
-        json.addProperty("email", email)
+        if (name.isNotEmpty()) {
+            json.addProperty("name", name)
+        }
+        if (email.isNotEmpty()) {
+            json.addProperty("email", email)
+        }
 
-        service.doCheckin(json, callback)
+        service.checkinRequest(json, callback)
     }
 }

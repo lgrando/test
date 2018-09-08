@@ -21,43 +21,34 @@ class EventViewModel : ViewModel() {
     private val repository = EventRepository()
     var peopleList: MutableLiveData<MutableList<People>> = MutableLiveData()
     var selectedEvent: MutableLiveData<Event> = MutableLiveData()
-    var onCheckinResponse: MutableLiveData<Boolean> = MutableLiveData()
 
-    var callCheckinDialog = SingleLiveEvent<Void>()
     var listEventsResponse = SingleLiveEvent<Void>()
+    var onCheckinResponse = SingleLiveEvent<Void>()
+    var onCheckinError = ObservableInt(View.GONE)
 
     var eventList = ObservableField<MutableList<Event>>()
+    var emptyList = ObservableInt(View.GONE)
+
     var title = ObservableField<String>("")
     var description = ObservableField<String>("")
-    var checkinCount = ObservableInt()
-    var loading = ObservableInt(View.GONE)
-    var emptyList = ObservableInt(View.GONE)
     var eventLoaded = ObservableInt(View.GONE)
+    var checkinCount = ObservableInt()
+    var doCheckin = ObservableBoolean(false)
+    var nameError = ObservableInt(View.GONE)
+    var emailError = ObservableInt(View.GONE)
+
+    var loading = ObservableInt(View.GONE)
+    var checkinLoading = ObservableBoolean(false)
 
     fun setEvent(event: Event) {
         getEventDetail(event.id)
     }
 
-    private fun setLoading(show: Boolean) {
-        val visibility: Int = if (show) View.VISIBLE else View.GONE
-        loading.set(visibility)
-    }
-
-    private fun setEmptyList(show: Boolean) {
-        val visibility: Int = if (show) View.VISIBLE else View.GONE
-        emptyList.set(visibility)
-    }
-
-    private fun setEventLoaded(show: Boolean) {
-        val visibility: Int = if (show) View.VISIBLE else View.GONE
-        eventLoaded.set(visibility)
-    }
-
     fun getEvents() {
-        setLoading(true)
+        loading.set(View.VISIBLE)
         repository.getEvents(object : ServiceCallback {
             override fun onSuccess(response: JsonElement) {
-                setLoading(false)
+                loading.set(View.GONE)
                 var gson = Gson()
                 val eventArray: ArrayList<Event> = ArrayList()
 
@@ -66,13 +57,18 @@ class EventViewModel : ViewModel() {
                     eventArray.add(event)
                 }
                 eventList.set(eventArray.toMutableList())
-                setEmptyList(eventList.get().size < 1)
+
+                if (eventList.get().size < 1) {
+                    emptyList.set(View.VISIBLE)
+                } else {
+                    emptyList.set(View.GONE)
+                }
                 listEventsResponse.call()
             }
 
             override fun onFailure(error: Throwable) {
-                setLoading(false)
-                setEmptyList(true)
+                loading.set(View.GONE)
+                emptyList.set(View.VISIBLE)
             }
         })
     }
@@ -82,40 +78,46 @@ class EventViewModel : ViewModel() {
       Chamada /events/{id} foi criada para atingir todas as especificações do teste
     */
     fun getEventDetail(id: String) {
-        setLoading(true)
-        setEventLoaded(false)
+        loading.set(View.VISIBLE)
+        eventLoaded.set(View.GONE)
         repository.getEventDetail(id, object : ServiceCallback {
             override fun onSuccess(response: JsonElement) {
-                setLoading(false)
+                loading.set(View.GONE)
                 var gson = Gson()
                 var event = gson.fromJson<Event>(response.asJsonObject, Event::class.java)
                 selectedEvent.value = event
                 peopleList.value = event.people?.toMutableList()
                 event.people?.size?.let { checkinCount.set(it) }
-                setEventLoaded(true)
+                eventLoaded.set(View.VISIBLE)
             }
 
             override fun onFailure(error: Throwable) {
-                setLoading(false)
+                loading.set(View.GONE)
             }
         })
     }
 
     fun onClickCheckin(view: View) {
-        callCheckinDialog.call()
+        if (doCheckin.get()) {
+            doCheckin.set(false)
+        } else {
+            doCheckin.set(true)
+            onCheckinError.set(View.GONE)
+        }
     }
 
-    fun doCheckin(name: String, email: String) {
-        setLoading(true)
-        repository.doCheckin(selectedEvent.value?.id, name, email, object : ServiceCallback {
+    fun checkinRequest(name: String, email: String) {
+        checkinLoading.set(true)
+        repository.checkinRequest(selectedEvent.value?.id, name, email, object : ServiceCallback {
             override fun onSuccess(response: JsonElement) {
-                setLoading(false)
-                onCheckinResponse.value = true
+                checkinLoading.set(false)
+                onCheckinError.set(View.GONE)
+                onCheckinResponse.call()
             }
 
             override fun onFailure(error: Throwable) {
-                setLoading(false)
-                onCheckinResponse.value = false
+                checkinLoading.set(false)
+                onCheckinError.set(View.VISIBLE)
             }
         })
     }

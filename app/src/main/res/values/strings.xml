@@ -5,12 +5,15 @@
     <string name="list_empty">Não há eventos para exibir no momento</string>
 
     <!--FRAGMENT DETAIL-->
-    <string name="detail_check_in_label">Fazer checkin</string>
+    <string name="detail_checkin_label">Fazer checkin</string>
 
-    <!--DIALOG CHECKIN-->
-    <string name="dialog_check_in_label">Informe seus dados</string>
-    <string name="dialog_name_hint">Nome</string>
-    <string name="dialog_email_hint">Email</string>
-    <string name="dialog_confirm_button">Confirmar</string>
+    <!--CHECKIN-->
+    <string name="checkin_label">Informe seus dados</string>
+    <string name="checkin_name_hint">Nome</string>
+    <string name="checkin_name_error">Insira seu nome</string>
+    <string name="checkin_email_hint">Email</string>
+    <string name="checkin_email_error">Insira seu email</string>
+    <string name="checkin_invalid_email_error">Email inválido</string>
+    <string name="checkin_error_response">Não foi possível realizar seu check-in</string>
 
 </resources>

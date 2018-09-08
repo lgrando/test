@@ -33,7 +33,7 @@ class EventService {
         sendRequest(eventAPI.eventDetails(id), callback)
     }
 
-    fun doCheckin(json: JsonObject, callback: ServiceCallback) {
+    fun checkinRequest(json: JsonObject, callback: ServiceCallback) {
         sendRequest(eventAPI.checkin(json), callback)
     }
 

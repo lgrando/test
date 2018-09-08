@@ -18,6 +18,6 @@ interface EventAPI {
     @GET("events/{id}")
     fun eventDetails(@Path("id") id: String): Observable<JsonElement>
 
-    @POST("checkins")
+    @POST("checkinf")
     fun checkin(@Body() request: JsonObject): Observable<JsonElement>
 }
