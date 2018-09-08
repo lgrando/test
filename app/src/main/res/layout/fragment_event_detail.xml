@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -13,7 +14,6 @@
         <variable
             name="handler"
             type="br.com.customapp.views.fragments.EventDetailFragment" />
-
     </data>
 
     <android.support.v4.widget.NestedScrollView
@@ -28,7 +28,8 @@
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp">
+                android:layout_margin="5dp"
+                app:cardUseCompatPadding="true">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -60,42 +61,68 @@
                             android:textStyle="bold" />
 
                         <LinearLayout
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginTop="15dp"
+                            android:layout_marginTop="10dp"
                             android:orientation="horizontal">
 
-                            <ImageView
-                                android:layout_width="40dp"
-                                android:layout_height="40dp"
-                                android:src="@drawable/ic_calendar" />
-
                             <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:layout_marginLeft="20dp"
-                                android:orientation="vertical">
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="horizontal">
 
-                                <TextView
-                                    android:id="@+id/date"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="0dp"
-                                    android:layout_weight="1"
-                                    android:gravity="bottom|center"
-                                    android:textSize="16sp"
-                                    android:textStyle="bold" />
+                                <ImageView
+                                    android:layout_width="40dp"
+                                    android:layout_height="50dp"
+                                    android:src="@drawable/ic_calendar" />
 
-                                <TextView
-                                    android:id="@+id/time"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="0dp"
-                                    android:layout_weight="1"
-                                    android:gravity="top|center"
-                                    android:textSize="16sp"
-                                    android:textStyle="bold" />
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginLeft="20dp"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:id="@+id/date"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="1"
+                                        android:gravity="center"
+                                        android:textSize="16sp"
+                                        android:textStyle="bold" />
+
+                                    <TextView
+                                        android:id="@+id/time"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="1"
+                                        android:gravity="top|center"
+                                        android:textSize="16sp"
+                                        android:textStyle="bold" />
+
+                                </LinearLayout>
 
                             </LinearLayout>
+
+                            <View
+                                style="@style/VerticalSeparator"
+                                android:layout_marginLeft="20dp"
+                                android:layout_marginRight="20dp" />
+
+                            <Button
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:drawableLeft="@drawable/ic_check"
+                                android:gravity="center"
+                                android:onClick="@{viewModel::onClickCheckin}"
+                                android:text="@string/detail_check_in_label"
+                                android:textAllCaps="false"
+                                android:textSize="14sp" />
 
                         </LinearLayout>
 
@@ -104,7 +131,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="10dp"
-                            android:layout_marginTop="10dp" />
+                            android:layout_marginTop="15dp" />
 
                         <View style="@style/HorizontalSeparator" />
 
@@ -154,7 +181,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:layout_marginTop="15dp">
+                android:layout_marginTop="15dp"
+                app:cardUseCompatPadding="true">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -166,20 +194,24 @@
                         android:id="@+id/checkinLabel"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@{viewModel.listVisibility ? viewModel.checkinCount + ` comparecerão` : `Ninguém confirmou presença neste evento`}"
+                        android:layout_marginBottom="10dp"
+                        android:text="@{viewModel.listSize ? viewModel.checkinCount + ` comparecerão` : `Ninguém confirmou presença neste evento`}"
                         android:textSize="14sp"
                         android:textStyle="bold" />
+
+                    <View style="@style/HorizontalSeparator" />
 
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/peopleList"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:visibility="@{viewModel.listVisibility ? View.VISIBLE : View.GONE}"
+                        android:visibility="@{viewModel.listSize ? View.VISIBLE : View.GONE}"
                         tools:listitem="@layout/people_item" />
 
                 </LinearLayout>
 
             </android.support.v7.widget.CardView>
+
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 </layout>

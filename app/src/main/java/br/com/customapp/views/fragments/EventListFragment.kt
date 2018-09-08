@@ -65,11 +65,13 @@ class EventListFragment : Fragment() {
     }
 
     private fun setupLiveDataObserver() {
-        viewModel.eventList.observe(this, Observer {
-            if (it != null) {
-                eventAdapter.updateList(it)
-            }
-        })
+        viewModel.apply {
+            eventList.observe(this@EventListFragment, Observer {
+                if (it != null) {
+                    eventAdapter.updateList(it)
+                }
+            })
+        }
     }
 
 }

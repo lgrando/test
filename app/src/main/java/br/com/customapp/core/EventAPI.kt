@@ -1,19 +1,23 @@
 package br.com.customapp.core
 
-import com.google.gson.JsonArray
+import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import io.reactivex.Observable
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Path
 
 /**
  * Created by lucas on 05/09/18.
  */
 interface EventAPI {
     @GET("events")
-    fun listEvents(): Observable<JsonArray>
+    fun listEvents(): Observable<JsonElement>
 
-    @POST("checkin")
-    fun checkin(@Body() request: JsonObject): Observable<JsonObject>
+    @GET("events/{id}")
+    fun eventDetails(@Path("id") id: String): Observable<JsonElement>
+
+    @POST("checkins")
+    fun checkin(@Body() request: JsonObject): Observable<JsonElement>
 }

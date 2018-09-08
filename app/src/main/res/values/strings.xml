@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">CustomApp</string>
+
+    <!--FRAGMENT DETAIL-->
+    <string name="detail_check_in_label">Fazer checkin</string>
+
+
+    <!--DIALOG CHECKIN-->
+    <string name="dialog_check_in_label">Informe seus dados</string>
+    <string name="dialog_name_hint">Nome</string>
+    <string name="dialog_email_hint">Email</string>
+    <string name="dialog_confirm_button">Confirmar</string>
+
 </resources>

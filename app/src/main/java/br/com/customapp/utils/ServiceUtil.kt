@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit
  * Created by lucas on 05/09/18.
  */
 object ServiceUtil {
-    fun buildRetrofit(baseUrl: String, connectTimeout: Long = 30, readTimeout: Long = 30): Retrofit {
+    fun buildRetrofit(baseUrl: String, connectTimeout: Long = 10, readTimeout: Long = 10): Retrofit {
         val client = OkHttpClient.Builder()
                 .connectTimeout(connectTimeout, TimeUnit.SECONDS)
                 .readTimeout(readTimeout, TimeUnit.SECONDS)

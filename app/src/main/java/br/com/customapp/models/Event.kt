@@ -1,7 +1,7 @@
 package br.com.customapp.models
 
 data class Event(
-        val id: Int,
+        val id: String,
         val title: String,
         val latitude: String,
         val longitude: String,
