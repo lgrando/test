@@ -52,7 +52,7 @@ class EventListFragment : Fragment() {
     private fun setupRecyclerView() {
         eventList.layoutManager = LinearLayoutManager(activity)
         eventAdapter = EventAdapter(ArrayList(), this.activity!!) {
-            val event = viewModel.eventList.value?.get(it)
+            val event = viewModel.eventList.get()?.get(it)
             event?.let { ev ->
                 viewModel.setEvent(ev)
                 val activity = activity
@@ -66,10 +66,8 @@ class EventListFragment : Fragment() {
 
     private fun setupLiveDataObserver() {
         viewModel.apply {
-            eventList.observe(this@EventListFragment, Observer {
-                if (it != null) {
-                    eventAdapter.updateList(it)
-                }
+            listEventsResponse.observe(this@EventListFragment, Observer {
+                eventAdapter.updateList(viewModel.eventList.get())
             })
         }
     }

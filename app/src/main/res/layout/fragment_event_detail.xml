@@ -16,202 +16,222 @@
             type="br.com.customapp.views.fragments.EventDetailFragment" />
     </data>
 
-    <android.support.v4.widget.NestedScrollView
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
+        <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:visibility="@{viewModel.eventLoaded, default=gone}">
 
-            <android.support.v7.widget.CardView
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                app:cardUseCompatPadding="true">
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-                <LinearLayout
+                <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:id="@+id/image"
-                        android:layout_width="match_parent"
-                        android:layout_height="150dp"
-                        android:scaleType="centerCrop" />
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    app:cardUseCompatPadding="true">
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
+                        android:layout_height="match_parent"
                         android:orientation="vertical">
 
-                        <me.grantland.widget.AutofitTextView
-                            android:id="@+id/title"
+                        <ImageView
+                            android:id="@+id/image"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:gravity="center"
-                            android:maxLines="1"
-                            android:textSize="20sp"
-                            android:textStyle="bold" />
+                            android:layout_height="150dp"
+                            android:scaleType="centerCrop" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:orientation="horizontal">
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:orientation="vertical">
+
+                            <me.grantland.widget.AutofitTextView
+                                android:id="@+id/title"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:gravity="center"
+                                android:maxLines="1"
+                                android:textSize="20sp"
+                                android:textStyle="bold" />
 
                             <LinearLayout
-                                android:layout_width="0dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:orientation="horizontal">
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:orientation="horizontal">
+
+                                    <ImageView
+                                        android:layout_width="40dp"
+                                        android:layout_height="50dp"
+                                        android:src="@drawable/ic_calendar" />
+
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="match_parent"
+                                        android:layout_marginLeft="20dp"
+                                        android:orientation="vertical">
+
+                                        <TextView
+                                            android:id="@+id/date"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="0dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:textSize="16sp"
+                                            android:textStyle="bold" />
+
+                                        <TextView
+                                            android:id="@+id/time"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="0dp"
+                                            android:layout_weight="1"
+                                            android:gravity="top|center"
+                                            android:textSize="16sp"
+                                            android:textStyle="bold" />
+
+                                    </LinearLayout>
+
+                                </LinearLayout>
+
+                                <View
+                                    style="@style/VerticalSeparator"
+                                    android:layout_marginLeft="20dp"
+                                    android:layout_marginRight="20dp" />
+
+                                <Button
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="1"
+                                    android:drawableLeft="@drawable/ic_check"
+                                    android:gravity="center"
+                                    android:onClick="@{viewModel::onClickCheckin}"
+                                    android:text="@string/detail_check_in_label"
+                                    android:textAllCaps="false"
+                                    android:textSize="14sp" />
+
+                            </LinearLayout>
+
+                            <TextView
+                                android:id="@+id/description"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="10dp"
+                                android:layout_marginTop="15dp" />
+
+                            <View style="@style/HorizontalSeparator" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
-                                android:layout_weight="1"
-                                android:gravity="center"
+                                android:layout_marginTop="10dp"
                                 android:orientation="horizontal">
 
                                 <ImageView
                                     android:layout_width="40dp"
-                                    android:layout_height="50dp"
-                                    android:src="@drawable/ic_calendar" />
+                                    android:layout_height="40dp"
+                                    android:src="@drawable/ic_pin" />
 
                                 <LinearLayout
                                     android:layout_width="wrap_content"
                                     android:layout_height="match_parent"
-                                    android:layout_marginLeft="20dp"
                                     android:orientation="vertical">
 
                                     <TextView
-                                        android:id="@+id/date"
+                                        android:id="@+id/address"
                                         android:layout_width="match_parent"
                                         android:layout_height="0dp"
                                         android:layout_weight="1"
-                                        android:gravity="center"
-                                        android:textSize="16sp"
+                                        android:gravity="bottom"
+                                        android:textSize="12sp"
                                         android:textStyle="bold" />
 
                                     <TextView
-                                        android:id="@+id/time"
+                                        android:id="@+id/city"
                                         android:layout_width="match_parent"
                                         android:layout_height="0dp"
                                         android:layout_weight="1"
-                                        android:gravity="top|center"
-                                        android:textSize="16sp"
+                                        android:gravity="top"
+                                        android:textSize="12sp"
                                         android:textStyle="bold" />
 
                                 </LinearLayout>
-
                             </LinearLayout>
-
-                            <View
-                                style="@style/VerticalSeparator"
-                                android:layout_marginLeft="20dp"
-                                android:layout_marginRight="20dp" />
-
-                            <Button
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_weight="1"
-                                android:drawableLeft="@drawable/ic_check"
-                                android:gravity="center"
-                                android:onClick="@{viewModel::onClickCheckin}"
-                                android:text="@string/detail_check_in_label"
-                                android:textAllCaps="false"
-                                android:textSize="14sp" />
-
                         </LinearLayout>
 
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_marginTop="15dp"
+                    app:cardUseCompatPadding="true">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:orientation="vertical">
+
                         <TextView
-                            android:id="@+id/description"
+                            android:id="@+id/checkinLabel"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="10dp"
-                            android:layout_marginTop="15dp" />
+                            android:text="@{viewModel.checkinCount > 0 ? viewModel.checkinCount + ` comparecerão` : `Ninguém confirmou presença neste evento`}"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
 
                         <View style="@style/HorizontalSeparator" />
 
-                        <LinearLayout
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/peopleList"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginTop="10dp"
-                            android:orientation="horizontal">
+                            android:visibility="@{viewModel.checkinCount > 0 ? View.VISIBLE : View.GONE}"
+                            tools:listitem="@layout/people_item" />
 
-                            <ImageView
-                                android:layout_width="40dp"
-                                android:layout_height="40dp"
-                                android:src="@drawable/ic_pin" />
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:orientation="vertical">
-
-                                <TextView
-                                    android:id="@+id/address"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="0dp"
-                                    android:layout_weight="1"
-                                    android:gravity="bottom"
-                                    android:textSize="12sp"
-                                    android:textStyle="bold" />
-
-                                <TextView
-                                    android:id="@+id/city"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="0dp"
-                                    android:layout_weight="1"
-                                    android:gravity="top"
-                                    android:textSize="12sp"
-                                    android:textStyle="bold" />
-
-                            </LinearLayout>
-                        </LinearLayout>
                     </LinearLayout>
 
-                </LinearLayout>
-            </android.support.v7.widget.CardView>
+                </android.support.v7.widget.CardView>
 
-            <android.support.v7.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:layout_marginTop="15dp"
-                app:cardUseCompatPadding="true">
+            </LinearLayout>
+        </android.support.v4.widget.NestedScrollView>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#99000000"
+            android:gravity="center"
+            android:visibility="@{viewModel.loading, default=gone}">
 
-                    <TextView
-                        android:id="@+id/checkinLabel"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"
-                        android:text="@{viewModel.listSize ? viewModel.checkinCount + ` comparecerão` : `Ninguém confirmou presença neste evento`}"
-                        android:textSize="14sp"
-                        android:textStyle="bold" />
-
-                    <View style="@style/HorizontalSeparator" />
-
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/peopleList"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:visibility="@{viewModel.listSize ? View.VISIBLE : View.GONE}"
-                        tools:listitem="@layout/people_item" />
-
-                </LinearLayout>
-
-            </android.support.v7.widget.CardView>
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
+
+    </RelativeLayout>
 </layout>

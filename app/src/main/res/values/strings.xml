@@ -1,9 +1,11 @@
 <resources>
     <string name="app_name">CustomApp</string>
 
+    <!--FRAGMENT LIST-->
+    <string name="list_empty">Não há eventos para exibir no momento</string>
+
     <!--FRAGMENT DETAIL-->
     <string name="detail_check_in_label">Fazer checkin</string>
-
 
     <!--DIALOG CHECKIN-->
     <string name="dialog_check_in_label">Informe seus dados</string>

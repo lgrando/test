@@ -4,6 +4,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="viewModel"
             type="br.com.customapp.viewmodels.EventViewModel" />
@@ -13,10 +15,9 @@
             type="br.com.customapp.views.fragments.EventListFragment" />
     </data>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".views.fragments.EventListFragment">
+        android:layout_height="match_parent">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/eventList"
@@ -25,5 +26,27 @@
             android:background="@color/lightGray"
             tools:listitem="@layout/event_item" />
 
-    </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#99000000"
+            android:gravity="center"
+            android:visibility="@{viewModel.loading, default=gone}">
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="40dp"
+            android:gravity="center"
+            android:text="@string/list_empty"
+            android:textSize="20sp"
+            android:visibility="@{viewModel.emptyList, default=gone}" />
+
+    </RelativeLayout>
 </layout>

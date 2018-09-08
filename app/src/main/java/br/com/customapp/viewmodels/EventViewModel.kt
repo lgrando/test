@@ -4,6 +4,7 @@ import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.databinding.ObservableBoolean
 import android.databinding.ObservableField
+import android.databinding.ObservableInt
 import android.view.View
 import br.com.customapp.core.ServiceCallback
 import br.com.customapp.models.Event
@@ -18,24 +19,45 @@ import com.google.gson.JsonElement
 class EventViewModel : ViewModel() {
 
     private val repository = EventRepository()
-    var eventList: MutableLiveData<MutableList<Event>> = MutableLiveData()
     var peopleList: MutableLiveData<MutableList<People>> = MutableLiveData()
     var selectedEvent: MutableLiveData<Event> = MutableLiveData()
     var onCheckinResponse: MutableLiveData<Boolean> = MutableLiveData()
-    var callCheckinDialog = SingleLiveEvent<Void>()
 
+    var callCheckinDialog = SingleLiveEvent<Void>()
+    var listEventsResponse = SingleLiveEvent<Void>()
+
+    var eventList = ObservableField<MutableList<Event>>()
     var title = ObservableField<String>("")
     var description = ObservableField<String>("")
-    var listSize = ObservableBoolean()
-    var checkinCount = ObservableField<String>("")
+    var checkinCount = ObservableInt()
+    var loading = ObservableInt(View.GONE)
+    var emptyList = ObservableInt(View.GONE)
+    var eventLoaded = ObservableInt(View.GONE)
 
     fun setEvent(event: Event) {
         getEventDetail(event.id)
     }
 
+    private fun setLoading(show: Boolean) {
+        val visibility: Int = if (show) View.VISIBLE else View.GONE
+        loading.set(visibility)
+    }
+
+    private fun setEmptyList(show: Boolean) {
+        val visibility: Int = if (show) View.VISIBLE else View.GONE
+        emptyList.set(visibility)
+    }
+
+    private fun setEventLoaded(show: Boolean) {
+        val visibility: Int = if (show) View.VISIBLE else View.GONE
+        eventLoaded.set(visibility)
+    }
+
     fun getEvents() {
+        setLoading(true)
         repository.getEvents(object : ServiceCallback {
             override fun onSuccess(response: JsonElement) {
+                setLoading(false)
                 var gson = Gson()
                 val eventArray: ArrayList<Event> = ArrayList()
 
@@ -43,11 +65,14 @@ class EventViewModel : ViewModel() {
                     var event = gson.fromJson<Event>(response.asJsonArray.get(i), Event::class.java)
                     eventArray.add(event)
                 }
-                eventList.value = eventArray.toMutableList()
+                eventList.set(eventArray.toMutableList())
+                setEmptyList(eventList.get().size < 1)
+                listEventsResponse.call()
             }
 
             override fun onFailure(error: Throwable) {
-
+                setLoading(false)
+                setEmptyList(true)
             }
         })
     }
@@ -57,18 +82,21 @@ class EventViewModel : ViewModel() {
       Chamada /events/{id} foi criada para atingir todas as especificações do teste
     */
     fun getEventDetail(id: String) {
+        setLoading(true)
+        setEventLoaded(false)
         repository.getEventDetail(id, object : ServiceCallback {
             override fun onSuccess(response: JsonElement) {
+                setLoading(false)
                 var gson = Gson()
                 var event = gson.fromJson<Event>(response.asJsonObject, Event::class.java)
                 selectedEvent.value = event
                 peopleList.value = event.people?.toMutableList()
-                checkinCount.set(event.people?.size.toString())
-                listSize.set(event.people?.size!! > 0)
+                event.people?.size?.let { checkinCount.set(it) }
+                setEventLoaded(true)
             }
 
             override fun onFailure(error: Throwable) {
-
+                setLoading(false)
             }
         })
     }
@@ -78,12 +106,15 @@ class EventViewModel : ViewModel() {
     }
 
     fun doCheckin(name: String, email: String) {
+        setLoading(true)
         repository.doCheckin(selectedEvent.value?.id, name, email, object : ServiceCallback {
             override fun onSuccess(response: JsonElement) {
+                setLoading(false)
                 onCheckinResponse.value = true
             }
 
             override fun onFailure(error: Throwable) {
+                setLoading(false)
                 onCheckinResponse.value = false
             }
         })
