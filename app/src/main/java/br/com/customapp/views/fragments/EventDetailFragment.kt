@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import android.widget.Toast
 import br.com.customapp.R
 import br.com.customapp.databinding.FragmentEventDetailBinding
 import br.com.customapp.models.Event
@@ -71,9 +72,7 @@ class EventDetailFragment : Fragment() {
                 }
             })
             onCheckinResponse.observe(this@EventDetailFragment, Observer {
-                it?.let {
-
-                }
+                Toast.makeText(activity, getString(R.string.detail_checkin_success), Toast.LENGTH_SHORT).show()
             })
         }
     }

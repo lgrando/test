@@ -124,7 +124,6 @@
                                     android:layout_gravity="center"
                                     android:layout_weight="1"
                                     android:drawableLeft="@drawable/ic_check"
-                                    android:enabled="@{viewModel.doCheckin ? false : true}"
                                     android:gravity="center"
                                     android:onClick="@{viewModel::onClickCheckin}"
                                     android:text="@string/detail_checkin_label"
@@ -239,11 +238,18 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#99000000"
+            android:clickable="true"
+            android:visibility="@{viewModel.doCheckin, default=gone}" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="200dp"
             android:layout_alignParentBottom="true"
             android:background="@drawable/background_top_stroke"
             android:clickable="true"
-            android:visibility="@{viewModel.doCheckin ? View.VISIBLE : View.GONE}">
+            android:visibility="@{viewModel.doCheckin, default=gone}">
 
             <ImageView
                 android:id="@+id/close"

@@ -6,6 +6,7 @@
 
     <!--FRAGMENT DETAIL-->
     <string name="detail_checkin_label">Fazer checkin</string>
+    <string name="detail_checkin_success">Check-in efetuado com sucesso!</string>
 
     <!--CHECKIN-->
     <string name="checkin_label">Informe seus dados</string>

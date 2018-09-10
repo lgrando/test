@@ -33,7 +33,7 @@ class EventViewModel : ViewModel() {
     var description = ObservableField<String>("")
     var eventLoaded = ObservableInt(View.GONE)
     var checkinCount = ObservableInt()
-    var doCheckin = ObservableBoolean(false)
+    var doCheckin = ObservableInt(View.GONE)
     var nameError = ObservableInt(View.GONE)
     var emailError = ObservableInt(View.GONE)
 
@@ -98,10 +98,10 @@ class EventViewModel : ViewModel() {
     }
 
     fun onClickCheckin(view: View) {
-        if (doCheckin.get()) {
-            doCheckin.set(false)
+        if (doCheckin.get() == View.VISIBLE) {
+            doCheckin.set(View.GONE)
         } else {
-            doCheckin.set(true)
+            doCheckin.set(View.VISIBLE)
             onCheckinError.set(View.GONE)
         }
     }
@@ -112,6 +112,7 @@ class EventViewModel : ViewModel() {
             override fun onSuccess(response: JsonElement) {
                 checkinLoading.set(false)
                 onCheckinError.set(View.GONE)
+                doCheckin.set(View.GONE)
                 onCheckinResponse.call()
             }
 
