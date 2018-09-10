@@ -33,6 +33,17 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
+    /*
+     * Para o desenvolvimento deste projeto, optei por utilizar a linguagem Kotlin,
+     * por se tratar de uma linguagem nova para desenvolvimento Android nativo
+     * e também optei pelo padrão MVVM com databinding por ser um padrão recomendado
+     * pela própria Google para o desenvolvimento desta plataforma.
+     *
+     * Padrão que mantém uma organização no código e nas estruturas de classes,
+     * desacoplando as funções para cada componente e também deixa o código mais legível
+     * e de fácil manutenção para o desenvolvedor.
+     */
+
     /*KOTLIN*/
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
 
@@ -47,16 +58,19 @@ dependencies {
     implementation 'android.arch.lifecycle:extensions:1.1.1'
     implementation 'android.arch.lifecycle:common-java8:1.1.1'
 
-    /*PERSISTENCE*/
-    implementation 'io.paperdb:paperdb:2.6'
-
-    /*GSON*/
-    implementation 'com.google.code.gson:gson:2.8.5'
-
     /*DATA_BINDING*/
     kapt 'com.android.databinding:compiler:3.0.1'
 
+    /*GSON*/
+    /* Dependencia da Google para facilitar a conversão Obj > Json e Json > Obj */
+    implementation 'com.google.code.gson:gson:2.8.5'
+
     /*RX_JAVA*/
+    /* RXJAVA e Retrofit foram escolhidos para o desenvolvimento deste projeto
+     * por se tratarem de opções mais atuais,
+     * possuem uma boa documentação,
+     * possui grande variedade de suporte e
+     * também possui uma implementação organizada */
     implementation 'io.reactivex.rxjava2:rxjava:2.1.11'
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
 
@@ -67,12 +81,15 @@ dependencies {
     implementation 'com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0'
 
     /*PICASSO*/
+    /* Biblioteca simples e que auxilia o desenvolvedor a utilizar componentes visuais relacionados a imagens */
     implementation 'com.squareup.picasso:picasso:2.71828'
 
     /*CIRCLE IMAGEVIEW*/
+    /* Esta biblioteca é um componente visual para imagens circulares, auxiliando a criação de layouts com menos implementação */
     implementation 'de.hdodenhof:circleimageview:2.2.0'
 
     /*AUTOFIT TEXTVIEW*/
+    /* Biblioteca responsável pela manutenção de TextViews, redimensionando o tamanho da fonte conforme o tamanho do texto recebido */
     implementation 'me.grantland:autofittextview:0.2.+'
 
     testImplementation 'junit:junit:4.12'

@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
 
         viewModel = ViewModelProviders.of(this).get(EventViewModel::class.java)
 
-        fragmentManager.replaceFragment(EventListFragment(), Constants.TAG_EVENT_LIST_FRAGMENT)
+        fragmentManager.addFragment(EventListFragment(), Constants.TAG_EVENT_LIST_FRAGMENT)
     }
 
     fun replaceFragment(fragment: Fragment, tag: String) {
